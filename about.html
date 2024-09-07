@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haqqımızda</title>
+    <style>
+        .tab { display: inline-block; padding: 10px; background: lightgrey; cursor: pointer; margin: 0 5px;}
+        .active { background: black; color: beige; }
+        .content { display: none; padding: 10px; border: 1px solid grey; }
+        .content.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <h1>Haqqımızda</h1>
+    
+    <div class="tab" data-tab="1">Tab 1</div>
+    <div class="tab" data-tab="2">Tab 2</div>
+    <div class="tab" data-tab="3">Tab 3</div>
+
+    <div id="content-1" class="content">Tab 1 Haqqımızda Məzmunu</div>
+    <div id="content-2" class="content">Tab 2 Haqqımızda Məzmunu</div>
+    <div id="content-3" class="content">Tab 3 Haqqımızda Məzmunu</div>
+
+    <script>
+        // LocalStorage-dən aktiv taba baxırıq
+        const activeTab = localStorage.getItem('activeAboutTabIndex') || 1;
+
+        // Tabları göstəririk
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.content');
+
+        function showTab(index) {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            document.querySelector(`.tab[data-tab="${index}"]`).classList.add('active');
+            document.getElementById(`content-${index}`).classList.add('active');
+        }
+
+        // Seçili taba keçid
+        showTab(activeTab);
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabIndex = this.getAttribute('data-tab');
+                showTab(tabIndex);
+                localStorage.setItem('activeAboutTabIndex', tabIndex);
+            });
+        });
+    </script>
+
+    <a href="index.html">Əsas Səhifə</a>
+</body>
+</html>
